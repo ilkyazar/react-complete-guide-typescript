@@ -7,17 +7,23 @@ import Todo from './models/todo';
 function App() {
   const [todos, setTodos] = useState<Todo[]>([]);
 
-  const appTodoHandler = (text: string) => {
+  const addTodoHandler = (text: string) => {
     const newTodo = new Todo(text);
     setTodos((prevTodos) => {
       return prevTodos.concat(newTodo);
     });
   };
 
+  const removeTodoHandler = (id: string) => {
+    setTodos((prevTodos) => {
+      return prevTodos.filter((todo) => todo.id !== id);
+    });
+  };
+
   return (
     <div>
-      <NewTodo onAddTodo={appTodoHandler} />
-      <Todos items={todos} />
+      <NewTodo onAddTodo={addTodoHandler} />
+      <Todos items={todos} onRemoveTodo={removeTodoHandler} />
     </div>
   );
 }
